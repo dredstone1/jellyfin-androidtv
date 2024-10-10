@@ -90,12 +90,6 @@ jobs:
           name: v${{ env.JELLYFIN_VERSION }}
           files: app/build/outputs/apk/release/*.apk
 
-      - name: Discord webhook notification
-        shell: bash
-        run: |
-          contentbody=$( jq -nc --arg msg "jellyfin-androidtv [${{ github.ref_name }}] **${{ github.sha }}**" '{"content": ($msg)}' )
-          curl -F "payload_json=${contentbody}" ${{ secrets.DISCORD_WEBHOOK }}
-
       - name: Upload package to Discord
         uses: sinshutu/upload-to-discord@master
         env:
